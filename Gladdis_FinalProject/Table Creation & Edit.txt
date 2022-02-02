@@ -1,0 +1,34 @@
+create table Users (
+    UsID int NOT NULL AUTO_INCREMENT,
+    Ulogin varchar(20),
+    pass varchar(20),
+    email varchar(225),
+    phone varchar(15),
+    PRIMARY KEY(UsID)
+);
+drop table Users;
+alter table users Auto_increment = 1;
+
+
+create table furniture (
+    fid int AUTO_INCREMENT,
+    sellid int,
+    category varchar(225),
+    price FLOAT,
+    PRIMARY KEY(fid),
+    FOREIGN KEY (sellid) REFERENCES Users(UsID)
+    ON DELETE CASCADE
+);
+drop table furniture;
+alter table furniture Auto_increment = 1;
+
+insert into gladdis.Users (Ulogin, pass, email, phone)
+values ('Test', 'Test', 'testmail@gmail.com', '111-111-1111');
+
+INSERT INTO furniture (sellid, category, price) VALUES
+    ((SELECT UsID from users WHERE Ulogin ='Test'),'Dresser','145.99');
+
+Select Ulogin, email, phone, category, price 
+from Users
+inner join furniture
+on Users.UsID = furniture.sellid;
